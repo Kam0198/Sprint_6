@@ -27,7 +27,7 @@ class TestOrderHeader:
         order_scooter.click_button_next()
         order_scooter.choose_date_order()
         order_scooter.choose_rental_period()
-        order_scooter.choose_date_order()
+        order_scooter.choose_color_scooter()
         order_scooter.enter_comment(comment)
         order_scooter.click_button_order()
         order_scooter.click_button_confirm()
