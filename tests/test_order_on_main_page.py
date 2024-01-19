@@ -1,15 +1,21 @@
 import time
+
+import allure
 import pytest
+
+from pages.main_page import YaMainPage
 from pages.order_page import OrderScooterPage
 
 
 class TestOrderHeader:
+    @allure.step("Заполнение всех полей и подтверждение оформления заказа")
     @pytest.mark.parametrize("name, surname, address, comment",[
         ("Кам", "Габдрахманова", "г.Москва, ул.Ход.Бульвар 5", "Доставить после 12:00")
     ])
     def test_form_header(self, driver, name, surname, address, comment):
         order_scooter = OrderScooterPage(driver)
-        order_scooter.go_to_site("https://qa-scooter.praktikum-services.ru/")
+        open_url = YaMainPage(driver)
+        open_url.go_to_site(YaMainPage.URL_MAIN)
         order_scooter.scroll_to_element()
         time.sleep(2)
         order_scooter.click_button_order_middle()

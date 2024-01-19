@@ -20,4 +20,5 @@ class OrderPageLocators:
     CANCEL_BUTTON = (By.XPATH, "//button[contains(text(),'Нет')]")
     CONFIRM_BUTTON = (By.XPATH, "//button[contains(text(),'Да')]")
 
-    MODAL_WINDOW = (By.CLASS_NAME, 'Order_ModalHeader__3FDaJ')
+    MODAL_WINDOW = (By.XPATH, "//div[contains(text(),'Заказ оформлен')]")
+

@@ -35,7 +35,7 @@ class TestTextQuestion:
     def test_faq_question(self, driver, text, locator):
         ya_main_page = YaMainPage(driver)
         asserts_instance = Asserts(driver)
-        ya_main_page.go_to_site("https://qa-scooter.praktikum-services.ru/")
+        ya_main_page.go_to_site(YaMainPage.URL_MAIN)
         ya_main_page.scroll_page_down()
         question_element = driver.find_element(*locator)
         driver.execute_script("arguments[0].scrollIntoView(true);", question_element)

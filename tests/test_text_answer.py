@@ -1,5 +1,6 @@
 import time
 
+import allure
 import pytest
 
 from asserts.base_assert import Asserts
@@ -8,6 +9,10 @@ from pages.main_page import YaMainPage
 
 
 class TestAnswerText:
+    @allure.feature('Проверка текста в блоке FAQ на соответствие введенному нами тексту')
+    @allure.title('Проверка текста в "Ответе" на "Вопрос"')
+    @allure.description('Сравниваем текст в каждом заголовке "Ответ" с ожидаемым текстом')
+    @allure.step('Сравниваем каждый заголовок текста в блоке "Ответ"')
     @pytest.mark.parametrize(("text", "question", "answer"),
                              [
                                  ("Сутки — 400 рублей. Оплата курьеру — наличными или картой.",
@@ -45,7 +50,7 @@ class TestAnswerText:
     def test_faq_answer(self, driver, text, question, answer):
         ya_main_page = YaMainPage(driver)
         asserts_instance = Asserts(driver)
-        ya_main_page.go_to_site("https://qa-scooter.praktikum-services.ru/")
+        ya_main_page.go_to_site(YaMainPage.URL_MAIN)
         ya_main_page.scroll_page_down()
         question_element = driver.find_element(*question)
         driver.execute_script("arguments[0].scrollIntoView(true);", question_element)
