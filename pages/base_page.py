@@ -7,21 +7,37 @@ class BasePage:
         self.driver = driver
 
     def go_to_site(self, url):
-        return self.driver.get(url)
+        self.driver.get(url)
+
+    def find_element_located_click(self, locator, time=10):
+        element = WebDriverWait(self.driver, time).until(
+             EC.presence_of_element_located(locator),
+             message=f'Element not found in {locator}')
+        element.click()
+
+    def find_element_scroll(self, locator):
+        element = self.driver.find_element(*locator)
+        self.driver.execute_script("arguments[0].scrollIntoView();", element)
 
     def find_element_located(self, locator, time=10):
         return WebDriverWait(self.driver, time).until(EC.presence_of_element_located(locator),
                                                       message=f'Element not found in {locator}')
 
-    def find_element_located_click(self, locator, time=10):
-        return WebDriverWait(self.driver, time).until(EC.presence_of_element_located(locator),
-                                                      message=f'Element not found in {locator}').click()
+    def find_window(self, time=10):
+        return WebDriverWait(self.driver, time).until(EC.number_of_windows_to_be(2))
 
-    def find_elements_located(self, locator, time=10):
-        return WebDriverWait(self.driver, time).until(EC.presence_of_all_elements_located(locator),
-                                                      message=f'Elements not found in {locator}')
-
-    def find_element_scroll(self, locator):
-        element = self.driver.find_element(*locator)
+    def scroll_and_click(self, locator, time=10):
+        element = WebDriverWait(self.driver, time).until(EC.presence_of_element_located(locator),
+                                                         message=f'Element no found in {locator}')
         self.driver.execute_script("arguments[0].scrollIntoView();", element)
+        self.driver.execute_script("arguments[0].click();", element)
+
+    def switch_to_new_window(self):
+        current_window = self.driver.current_window_handle
+        self.find_window()
+        all_windows = self.driver.window_handles
+        new_window = next(window for window in all_windows if window != current_window)
+        self.driver.switch_to.window(new_window)
+
+
 

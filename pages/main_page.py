@@ -1,34 +1,38 @@
 import allure
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 
-from locators.main_page_locators import MainPageLocators
+from locators.main_page_locators import MainPageLocators, FAQLocators
 from pages.base_page import BasePage
 
 
 class YaMainPage(BasePage):
-    def __int__(self, driver):
-        super().__init__(driver)
+    URL_MAIN = "https://qa-scooter.praktikum-services.ru/"
+    URL_DZEN = "https://dzen.ru/?yredirect=true"
 
     @allure.step("Клик по логотипу 'Самокат'")
     def click_logo_scooter(self):
-        self.driver.find_element(*MainPageLocators.LOGO_SCOOTER).click()
-        return
+        self.find_element_located_click(MainPageLocators.LOGO_SCOOTER)
 
     @allure.step("Клик по логотипу 'Яндекс'")
     def click_logo_yandex(self):
-        self.driver.find_element(*MainPageLocators.LOGO_YANDEX).click()
-        return
+        self.find_element_located_click(MainPageLocators.LOGO_YANDEX)
 
-    @allure.step("Скролл страницы вниз до появления кнопки 'Заказать'")
-    def scroll_page_down(self):
-        button_element = self.driver.find_element(By.TAG_NAME, 'body')
-        self.driver.execute_script("arguments[0].scrollIntoView();", button_element)
-        WebDriverWait(self.driver, 10).until(EC.invisibility_of_element_located((By.ID, 'BUTTON_ORDER')))
+    @allure.step("Скролл страницы до кнопки 'Заказать'")
+    def scroll_to_button(self):
+        self.scroll_and_click(MainPageLocators.ORDER_BUTTON_MIDDLE)
 
-    URL_MAIN = "https://qa-scooter.praktikum-services.ru/"
-    URL_DZEN = "https://dzen.ru/?yredirect=true"
+    @allure.step("Скролл страницы до блока 'Вопросы о важном'")
+    def scroll_to_question(self):
+        self.find_element_scroll(FAQLocators.FAQ_BLOCK)
+
+    @allure.step("Получение текста из элемента'")
+    def text_from_element(self, locator, time=10):
+        element = self.find_element_located(locator, time)
+        text = element.get_attribute('textContent')
+        return text
+
+
+
+
 
 
 

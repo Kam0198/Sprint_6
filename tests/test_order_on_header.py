@@ -6,7 +6,7 @@ from pages.order_page import OrderScooterPage
 
 
 class TestOrderHeader:
-    @allure.step("Заполнение всех полей и подтверждение оформления заказа")
+    @allure.title("Заполнение всех полей и подтверждение оформления заказа")
     @pytest.mark.parametrize("name, surname, address, comment",[
         ("Камилла", "Габдрахманова", "г.Москва, ул.Ход.Бульвар 1", "Доставить после 19:00")
     ])
